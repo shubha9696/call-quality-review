@@ -2651,3 +2651,39 @@ body {
   color: var(--color-escalation);
   transform: scale(1.1);
 }
+
+/* Text to Speech play/stop buttons inside chat transcript bubbles */
+.btn-tts-play {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  margin-left: 6px;
+}
+
+.bubble-wrapper:hover .btn-tts-play {
+  color: var(--text-secondary);
+}
+
+.btn-tts-play:hover {
+  background: var(--bg-glass-hover);
+  color: var(--accent-indigo) !important;
+  transform: scale(1.15);
+}
+
+.btn-tts-play.speaking {
+  color: var(--accent-pink) !important;
+  animation: pulse-glow 1.5s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
