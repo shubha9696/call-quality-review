@@ -12,7 +12,7 @@ Below are screenshots of the running Call Quality Review Tool, showcasing the da
 
 | 1. Dashboard Overview & Analytics | 2. Transcribed Transcript & Moments | 3. Credits & Technical Specs |
 | :---: | :---: | :---: |
-| ![Dashboard Overview](./docs/images/screenshot_1.jpg) | ![Transcript Timeline](./docs/images/screenshot_2.jpg) | ![Platform Credits](./docs/images/screenshot_3.jpg) |
+| ![Dashboard Overview](./docs/images/dashboard_overview.jpg) | ![Transcript Timeline](./docs/images/transcript_timeline.jpg) | ![Platform Credits](./docs/images/platform_credits.jpg) |
 
 ---
 
