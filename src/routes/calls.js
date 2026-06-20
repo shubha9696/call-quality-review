@@ -83,6 +83,11 @@ router.post('/', async (req, res) => {
     // Validate each turn in the transcript
     for (let i = 0; i < body.transcript.length; i++) {
       const turn = body.transcript[i];
+      if (!turn || typeof turn !== 'object') {
+        return res.status(400).json({
+          error: `Invalid turn structure at index ${i}. Must be a valid JSON object.`,
+        });
+      }
       if (!turn.speaker || !['agent', 'customer'].includes(turn.speaker)) {
         return res.status(400).json({
           error: `Invalid speaker at turn ${i}. Must be "agent" or "customer".`,
