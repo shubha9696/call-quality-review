@@ -1,0 +1,487 @@
+
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+  <meta charset="utf-8">
+  <title>Call Quality Review Tool — Complete Engineering Specification Manual</title>
+  <style>
+    body {
+      font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 50px;
+    }
+    .page-break {
+      page-break-before: always;
+      clear: both;
+    }
+    h1 {
+      color: #4f46e5;
+      font-size: 24px;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-top: 40px;
+      margin-bottom: 15px;
+    }
+    h2 {
+      color: #7c3aed;
+      font-size: 18px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 4px;
+    }
+    h3 {
+      color: #0ea5e9;
+      font-size: 14px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 13.5px;
+      color: #334155;
+      margin-bottom: 12px;
+      text-align: justify;
+    }
+    ul, ol {
+      margin-bottom: 15px;
+      padding-left: 20px;
+    }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: #f1f5f9;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      color: #b91c1c;
+    }
+    pre {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 14px;
+      border-radius: 6px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11.5px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px;
+      text-align: left;
+      font-size: 12.5px;
+    }
+    th {
+      background-color: #f1f5f9;
+      font-weight: bold;
+      color: #1e293b;
+    }
+    .title-container {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 80px 0;
+      background: #faf5ff;
+      border-radius: 12px;
+      border: 1px solid #f3e8ff;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #e0e7ff;
+      color: #4f46e5;
+      font-weight: bold;
+      font-size: 11px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+    .lead {
+      font-size: 15px;
+      color: #475569;
+      font-weight: 500;
+      line-height: 1.7;
+    }
+    .highlight-box {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .highlight-box-title {
+      font-weight: bold;
+      color: #15803d;
+      margin-bottom: 6px;
+      font-size: 13.5px;
+    }
+    .warning-box {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .warning-box-title {
+      font-weight: bold;
+      color: #b91c1c;
+      margin-bottom: 6px;
+      font-size: 13.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= PAGE 1 ================= -->
+  <div class="title-container">
+    <h1 style="color: #4f46e5; font-size: 34px; border: none; margin: 0; padding: 0; font-family: 'Georgia', serif;">Call Quality Review Tool</h1>
+    <p style="font-size: 18px; color: #6b7280; margin-top: 15px; font-weight: 300;">Complete Enterprise Engineering Specification Manual</p>
+    <div style="margin-top: 30px;">
+      <span class="badge">Voice Intelligence</span>
+      <span class="badge">Groq Whisper Large v3</span>
+      <span class="badge">Llama 3.3 Diarization</span>
+      <span class="badge">3D Cyberpunk-Glassmorphism</span>
+      <span class="badge">Secure Storage</span>
+    </div>
+    <div style="margin-top: 80px; font-size: 14px; color: #475569;">
+      <strong>Author:</strong> Shubham Chakrawarti<br>
+      <strong>Role:</strong> Lead Platform Architect / AI Systems Engineer<br>
+      <strong>Workspace:</strong> c:\Users\shubh\Desktop\call agent<br>
+      <strong>Version:</strong> 2.4.0 (Enterprise)<br>
+      <strong>Date:</strong> June 20, 2026
+    </div>
+    <p style="font-size: 12px; color: #9ca3af; margin-top: 60px;">Confidential Documentation for Internal Review & Showcase Purposes Only</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 2 ================= -->
+  <h1>Table of Contents</h1>
+  <ol style="font-size: 14px; line-height: 2;">
+    <li><strong>Executive Project Overview & Business Value</strong></li>
+    <li><strong>Core Architecture & Modular System Topography</strong></li>
+    <li><strong>Diarized Voice Intelligence Pipeline</strong></li>
+    <li><strong>Rules-Based Moment Detection Engine</strong>
+      <ul>
+        <li>4.1. Escalation Signals</li>
+        <li>4.2. Empathy Statements</li>
+        <li>4.3. Long Monologues</li>
+        <li>4.4. Dead Air & Speaker Transitions</li>
+      </ul>
+    </li>
+    <li><strong>Generative AI Orchestration & API Contracts</strong></li>
+    <li><strong>REST API Endpoints Specification</strong></li>
+    <li><strong>Front-End Visual Design & Micro-Interaction Engine</strong>
+      <ul>
+        <li>7.1. Cyberpunk-Glassmorphism Design Tokens</li>
+        <li>7.2. High-Performance 3D Card Hover Tilts</li>
+        <li>7.3. Dynamic Spotlight Shines</li>
+        <li>7.4. Parallel-Tail Award Badge Logo</li>
+      </ul>
+    </li>
+    <li><strong>Lead Architect Developer Profile Integration</strong></li>
+    <li><strong>Document Generation & Native Export Mechanics</strong></li>
+    <li><strong>Platform Security, Data Privacy, and Lifecycle Management</strong></li>
+    <li><strong>Scaling Benchmarks & Future Database Migration Path</strong></li>
+  </ol>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 3 ================= -->
+  <h1>1. Executive Project Overview & Business Value</h1>
+  <p class="lead">
+    In modern contact center operations, quality assurance (QA) is a critical compliance and coaching vector. Historically, supervisors had to manually listen to voice recordings or scan plain transcripts to audit conversations. This process is time-consuming, subjective, and difficult to scale.
+  </p>
+  <p>
+    The <strong>Call Quality Review Tool</strong> solves this issue by introducing automated, real-time voice intelligence. By integrating advanced machine learning transcription, speaker diarization, deterministic conversational pattern scanning, and LLM-driven feedback, the application automatically flags critical events.
+  </p>
+  <p>
+    This documentation manual serves as a complete blueprint of the platform. It covers everything from high-performance 3D card tilt handlers to LLM diarization prompting, demonstrating how to build a production-grade voice analytics dashboard using modern full-stack web standards.
+  </p>
+
+  <h2>Key Architectural Objectives:</h2>
+  <ul>
+    <li><strong>High Performance:</strong> Deliver sub-second DOM modifications and client-side document exports without external dependencies.</li>
+    <li><strong>Robust Transcription:</strong> Use state-of-the-art automatic speech recognition (ASR) to handle various accents and background noise.</li>
+    <li><strong>Contextual Diarization:</strong> Separate agent and customer channels, even on single-track audio recordings.</li>
+    <li><strong>Actionable Feedback:</strong> Provide supervisors with clear, context-aware coaching insights.</li>
+    <li><strong>Data Privacy:</strong> Implement transient lifecycle management for audio uploads.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 4 ================= -->
+  <h1>2. Core Architecture & Modular System Topography</h1>
+  <p>
+    The platform is built on a clean decoupling of the client-side user interface from the backend API services. This separation ensures that the UI remains highly responsive even during heavy audio processing tasks on the server.
+  </p>
+  
+  <h3>System Topology Directory Mapping:</h3>
+  <pre>
+c:\Users\shubh\Desktop\call agent
+├── server.js                 # Express Application Entry Point
+├── package.json              # Project Dependencies and NPM Scripts
+├── public/                   # Frontend Client Static Directory
+│   ├── index.html            # UI Structure and Modals Markup
+│   ├── styles.css            # Cyberpunk Glass Theme System & Animations
+│   ├── app.js                # State Controller, Renderers & 3D Tilt Script
+│   └── observe-logo.jpg      # Yellow Brand Identity Asset
+├── uploads/                  # Temporary Audio Processing Workspace
+└── src/                      # Backend Core Business Logic
+    ├── storage.js            # In-Memory DB and Retrieval Interface
+    ├── detection.js          # Regex and Lexicon Moment Validation Engine
+    ├── summary.js            # Quantitative Metric Aggregator
+    ├── groqAI.js             # Whisper STT and Llama 3.3 Integration Router
+    └── routes/
+        └── calls.js          # REST Router Handlers
+  </pre>
+
+  <p>
+    This component layout isolates the backend processing from the UI. If you want to change the database from in-memory storage to PostgreSQL, you only need to modify <code>storage.js</code>. The rest of the application remains untouched.
+  </p>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 5 ================= -->
+  <h1>3. Diarized Voice Intelligence Pipeline</h1>
+  <p>
+    Handling single-track audio recordings requires a multi-step diarization pipeline. In dual-track call recordings, the agent and customer speak on separate audio channels. However, on single-track channels, they are mixed together. The Call Quality Review Tool resolves this using a combination of Whisper's timestamp offsets and Llama 3.3's linguistic analysis:
+  </p>
+
+  <div class="highlight-box">
+    <div class="highlight-box-title">Process Flow: Audio to Structured Transcript</div>
+    <p>
+      1. **Audio Ingestion:** The supervisor uploads an audio recording (MP3, WAV, etc.) to the <code>/calls/upload</code> endpoint.<br>
+      2. **ASR Processing:** The file is streamed to <strong>Groq Whisper Large v3</strong>, which returns transcription segments containing absolute timestamps.<br>
+      3. **Contextual Diarization:** The raw segments are forwarded to <strong>Llama 3.3</strong> on Groq. Llama acts as an intelligent classifier, labeling each block as <code>"agent"</code> or <code>"customer"</code> based on greeting phrases, professional greetings, customer complaints, and context.<br>
+      4. **Analytical Compilation:** The labeled transcript is stored and analyzed to extract moments, talk ratios, and empathy scores.
+    </p>
+  </div>
+
+  <h3>Llama 3.3 Diarization System Prompt:</h3>
+  <p>
+    To ensure consistent results, Llama 3.3 is configured with a strict system prompt:
+  </p>
+  <pre>
+You are an expert diarization assistant. Your task is to analyze transcription segments and determine whether the speaker is the "agent" or the "customer".
+Analyze greetings, phrasing, compliance words, and conversational flow.
+Output your classification exclusively in the following JSON format:
+[
+  { "speaker": "agent", "text": "...", "t": 0 },
+  { "speaker": "customer", "text": "...", "t": 12 }
+]
+Do not include any intro or outro text. Output raw JSON only.
+  </pre>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 6 ================= -->
+  <h1>4. Rules-Based Moment Detection Engine</h1>
+  <p>
+    The moment detection engine in <code>src/detection.js</code> uses local string analysis and math logic gates to process transcripts instantly. This approach is much faster than running analysis through external APIs.
+  </p>
+
+  <h2>4.1. Escalation Signals</h2>
+  <p>
+    Escalations highlight call friction, customer frustration, or compliance risks. The engine checks customer dialogue turns against a set of key terms:
+  </p>
+  <pre>
+const ESCALATION_WORDS = ['refund', 'ridiculous', 'unacceptable', 'manager', 'cancel', 'lawsuit'];
+  </pre>
+  <p>
+    If a customer segment contains any of these words, the engine flags it and records the matching term to highlight it in the frontend transcript view.
+  </p>
+
+  <h2>4.2. Empathy Statements</h2>
+  <p>
+    Empathy is a key metric for customer satisfaction. The engine scans agent turns for active listening and validation statements:
+  </p>
+  <pre>
+const EMPATHY_PATTERNS = ["i understand", "i'm sorry", "i apologise", "i apologize", "i can see why"];
+  </pre>
+  <p>
+    Unlike escalations, the engine counts multiple empathy phrases in a single turn separately. For example, if an agent says, *"I completely understand your frustration and I'm very sorry about the delay,"* both "understand" and "sorry" are flagged as separate moments.
+  </p>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 7 ================= -->
+  <h2>4.3. Long Monologues</h2>
+  <p>
+    Long monologues from either the agent or the customer can indicate communication issues. For example, an agent monologue might mean they are over-explaining or reading too much of a script, while a customer monologue might indicate a complex complaint.
+  </p>
+  <p>
+    The monologue checker monitors word counts within consecutive turns. The segment text is split by whitespace:
+  </p>
+  <pre>
+const wordCount = turn.text.split(/\s+/).filter(Boolean).length;
+if (wordCount >= 120) {
+  // Flag as a monologue
+}
+  </pre>
+  <p>
+    If a turn contains **120 words or more**, it is flagged as a monologue.
+  </p>
+
+  <h2>4.4. Dead Air & Speaker Transitions</h2>
+  <p>
+    Dead air refers to silent gaps in a conversation. These gaps often point to tool delays, slow search queries, or confusion during the call.
+  </p>
+  <p>
+    The engine monitors timestamps between turns. The gap is calculated as:
+  </p>
+  <pre>
+const gap = currentTurn.t - (previousTurn.t + estimatedPreviousDuration);
+if (gap >= 15) {
+  // Flag as dead air
+}
+  </pre>
+  <p>
+    If the silence last **15 seconds or more**, it is flagged as dead air. The moment is attached to the turn where conversation resumes, making it easy for supervisors to skip directly to the point where speech starts again.
+  </p>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 8 ================= -->
+  <h1>5. REST API Endpoints Specification</h1>
+  <p>
+    The backend router in <code>src/routes/calls.js</code> exposes a set of REST endpoints to handle audio files and JSON datasets:
+  </p>
+
+  <h3>1. POST /calls</h3>
+  <p>
+    Ingests raw JSON transcripts. Ideal for importing third-party datasets.
+  </p>
+  <pre>
+Request Body:
+{
+  "id": "call_99",
+  "agentName": "Alice Johnson",
+  "timestamp": "2026-06-20T11:00:00Z",
+  "duration": 180,
+  "transcript": [
+    { "speaker": "agent", "text": "Hello, how can I help you?", "t": 0 }
+  ]
+}
+Response: 201 Created
+{
+  "callId": "call_99",
+  "momentCount": 0
+}
+  </pre>
+
+  <h3>2. POST /calls/upload</h3>
+  <p>
+    Uploads call audio files. The server uses Multer to handle the upload, streams it to Groq Whisper, diarizes the speakers, runs moment detection, and saves the results.
+  </p>
+
+  <h3>3. DELETE /calls/:id</h3>
+  <p>
+    Permanently deletes a call recording and its analysis.
+  </p>
+  <pre>
+Response: 200 OK
+{
+  "success": true,
+  "message": "Call \"call_99\" deleted successfully."
+}
+  </pre>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 9 ================= -->
+  <h1>6. Front-End Visual Design & Micro-Interaction Engine</h1>
+  <p>
+    The frontend uses a modern, dark Cyberpunk-Glassmorphism aesthetic to present analytical data clearly.
+  </p>
+
+  <h2>6.1. Cyberpunk-Glassmorphism Design Tokens</h2>
+  <p>
+    The UI uses custom CSS variables to maintain a consistent dark theme:
+  </p>
+  <ul>
+    <li><code>--bg-primary: #030712;</code> (Deep black background)</li>
+    <li><code>--bg-secondary: #0b0f19;</code> (Dark blue panels)</li>
+    <li><code>--bg-glass: rgba(255, 255, 255, 0.02);</code> (Translucent glass panels)</li>
+    <li><code>--accent-indigo: #6366f1;</code> (Primary accent color)</li>
+    <li><code>--accent-purple: #a855f7;</code> (Secondary accent color)</li>
+  </ul>
+  <p>
+    Panels use backdrop filters (<code>backdrop-filter: blur(25px) saturate(180%)</code>) to create a translucent frosted-glass effect over the floating mesh background.
+  </p>
+
+  <h2>6.2. High-Performance 3D Card Hover Tilts</h2>
+  <p>
+    To improve the user experience, metric and call cards tilt in 3D space when hovered. To avoid performance issues from binding multiple event listeners to dynamic elements, the app uses a single event delegation handler on <code>document.body</code>:
+  </p>
+  <pre>
+document.addEventListener('mousemove', (e) => {
+  const card = e.target.closest('.tilt-3d');
+  if (card) {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xc = rect.width / 2;
+    const yc = rect.height / 2;
+    const maxTilt = 8;
+    const tiltX = ((yc - y) / yc) * maxTilt;
+    const tiltY = ((x - xc) / xc) * maxTilt;
+    card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+  }
+});
+  </pre>
+
+  <div class="page-break"></div>
+
+  <!-- ================= PAGE 10 ================= -->
+  <h1>7. Lead Architect Developer Profile Integration</h1>
+  <p>
+    The Credits section includes the credentials of the lead developer, extracted directly from his resume:
+  </p>
+
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px;">
+    <h3 style="margin-top: 0; color: #4f46e5;">Shubham Chakrawarti — Lead Platform Architect</h3>
+    <p><strong>Role:</strong> AI/ML Engineer & Full Stack Software Developer</p>
+    <p><strong>Location:</strong> Bengaluru, India</p>
+    <p><strong>Education:</strong> B.Tech in Computer Science & Engineering (Artificial Intelligence) — Parul University (GPA: 7.8/10)</p>
+    <p><strong>Experience:</strong> Data Analyst at Deloitte, Software Engineer at JPMorgan Chase & Co.</p>
+    <p><strong>Contact:</strong> shubham2004.hc@gmail.com | +91 9696137126</p>
+    <p><strong>Core Stack Skills:</strong> Python, SQL, MongoDB, Docker, Git, CI/CD, AWS, Azure, TensorFlow, Scikit-Learn, Pandas, NumPy, Express.js, Vanilla JS</p>
+    <p><strong>Hyperlinks:</strong> GitHub (https://github.com/shubh9696), LinkedIn (https://linkedin.com/in/shubham-chakrawarti-27764836a)</p>
+  </div>
+
+  <h1>8. Document Generation & Native Export Mechanics</h1>
+  <p>
+    The platform allows supervisors to export audit reports as PDF or Word files with a single click.
+  </p>
+  
+  <h3>PDF Generation:</h3>
+  <p>
+    The app opens a clean print window and applies CSS print styles, hiding UI elements like sidebars, buttons, and settings so only the report content is printed or saved as a PDF.
+  </p>
+
+  <h3>Word Document Compilation:</h3>
+  <p>
+    The app generates a raw HTML string containing the call metadata, transcript, moments, and AI recommendations. It wraps this HTML in XML tags to format it for Microsoft Word:
+  </p>
+  <pre>
+const htmlContent = `
+  &lt;html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'&gt;
+    &lt;body&gt;...&lt;/body&gt;
+  &lt;/html&gt;
+`;
+const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+  </pre>
+  <p>
+    Saving this file with a <code>.doc</code> extension allows Microsoft Word to parse and open it with correct formatting.
+  </p>
+
+  <div class="footer">
+    Call Quality Review Engineering Specification Document • Confidential Hackathon Assets • © 2026
+  </div>
+
+</body>
+</html>

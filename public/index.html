@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Call Quality Review Tool — AI-powered call analysis for contact center supervisors">
+  <title>Call Quality Review Tool — AI-Powered Analysis</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>">
+</head>
+<body>
+  
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+  </div>
+
+  <div class="app" id="app">
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+      <div class="header-left">
+        <div class="header-logo-container animate-float">
+          <img src="observe-logo.jpg" alt="Observe.ai" class="header-logo-img">
+        </div>
+        <div>
+          <h1 class="header-title">Call Quality Review</h1>
+          <div class="header-subtitle">AI-Powered Transcript Analysis</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-badge">
+          <span class="dot"></span>
+          <span id="callCountBadge">0 calls</span>
+        </div>
+        <button class="btn-sample" id="btnLoadSample" title="Load sample call data">
+          📋 Load Samples
+        </button>
+        <button class="btn-upload" id="btnUploadAudio" title="Upload audio recording for transcription">
+          🎤 Upload Audio
+        </button>
+        <button class="btn-ingest" id="btnIngest" title="Ingest a new call transcript">
+          <span>＋</span> Ingest JSON
+        </button>
+        <button class="btn-credits-toggle" id="btnCredits" title="About & Credits">
+          <svg class="credits-btn-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9" r="6" />
+            <path d="M9 14.5v6.5l3-2 3 2v-6.5" />
+          </svg>
+          Credits
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== MAIN 3-PANEL LAYOUT ===== -->
+    <div class="main-content">
+
+      <!-- LEFT: Call List -->
+      <aside class="call-list-panel" id="callListPanel">
+        <div class="panel-header">
+          <div class="panel-title">📞 Calls</div>
+          <div class="search-wrapper">
+            <input
+              type="text"
+              class="filter-input"
+              id="agentFilter"
+              placeholder="Filter by agent name..."
+              autocomplete="off"
+            />
+            <span class="search-icon">🔍</span>
+          </div>
+        </div>
+        <div class="call-list" id="callList">
+          <div class="empty-state" id="callListEmpty">
+            <div class="empty-state-icon animate-bounce-slow">📭</div>
+            <div class="empty-state-title">No calls yet</div>
+            <div class="empty-state-text">Click "Ingest Call" or "Load Samples" to get started.</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CENTER: Transcript + Summary -->
+      <main class="transcript-panel" id="transcriptPanel">
+        <!-- Summary bar (hidden until a call is selected) -->
+        <div class="summary-bar" id="summaryBar" style="display:none;"></div>
+
+        <!-- Transcript container -->
+        <div class="transcript-container" id="transcriptContainer">
+          <div class="empty-state" id="transcriptEmpty">
+            <div class="empty-state-icon animate-pulse-slow">🎙️</div>
+            <div class="empty-state-title">Select a call</div>
+            <div class="empty-state-text">Choose a call from the left panel to view the full transcript and analysis.</div>
+          </div>
+        </div>
+      </main>
+
+      <!-- RIGHT: Moments Sidebar -->
+      <aside class="moments-panel" id="momentsPanel">
+        <div class="panel-header">
+          <div class="panel-title">⚡ Moments</div>
+        </div>
+        <div class="moments-list" id="momentsList">
+          <div class="empty-state" id="momentsEmpty">
+            <div class="empty-state-icon">🔍</div>
+            <div class="empty-state-title">No moments</div>
+            <div class="empty-state-text">Select a call to see flagged moments.</div>
+          </div>
+        </div>
+        <!-- AI Insights -->
+        <div class="ai-insights-section" id="aiInsightsSection" style="display:none;">
+          <div class="ai-insights-title">
+            <span class="ai-sparkle animate-sparkle">✨</span> AI Coaching Insights
+          </div>
+          <div class="ai-insights-content" id="aiInsightsContent"></div>
+        </div>
+      </aside>
+
+    </div>
+
+    <!-- ===== INGEST JSON MODAL ===== -->
+    <div class="modal-overlay" id="ingestModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">📥 Ingest Call Transcript (JSON)</div>
+          <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="modal-body">
+          <textarea
+            id="ingestTextarea"
+            placeholder='Paste call JSON here...
+
+Example:
+{
+  "id": "call_1",
+  "agentName": "Alice",
+  "timestamp": "2025-01-15T10:30:00Z",
+  "duration": 180,
+  "transcript": [
+    { "speaker": "agent", "text": "Hello!", "t": 0 },
+    { "speaker": "customer", "text": "Hi there", "t": 3 }
+  ]
+}'
+          ></textarea>
+          <div class="modal-hint">Paste a valid JSON object with id, agentName, and transcript fields.</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" id="modalCancel">Cancel</button>
+          <button class="btn-primary" id="modalSubmit">
+            <span id="submitText">Ingest & Analyze</span>
+            <span id="submitSpinner" class="loading-spinner" style="display:none;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== AUDIO UPLOAD MODAL ===== -->
+    <div class="modal-overlay" id="audioModal">
+      <div class="modal audio-modal">
+        <div class="modal-header">
+          <div class="modal-title">🎤 Upload Audio Recording</div>
+          <button class="modal-close" id="audioModalClose">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="audio-agent-field">
+            <label for="audioAgentName">Agent Name</label>
+            <input type="text" id="audioAgentName" class="filter-input" placeholder="e.g. Alice Johnson" />
+          </div>
+
+          <div class="audio-dropzone" id="audioDropzone">
+            <div class="dropzone-idle" id="dropzoneIdle">
+              <div class="dropzone-icon animate-bounce-slow">🎵</div>
+              <div class="dropzone-title">Drag & drop audio file here</div>
+              <div class="dropzone-subtitle">or click to browse</div>
+              <div class="dropzone-formats">MP3, WAV, M4A, WEBM, OGG, FLAC — max 25MB</div>
+            </div>
+            <div class="dropzone-selected" id="dropzoneSelected" style="display:none;">
+              <div class="selected-file-icon">🎧</div>
+              <div class="selected-file-name" id="selectedFileName"></div>
+              <div class="selected-file-size" id="selectedFileSize"></div>
+              <button class="btn-remove-file" id="btnRemoveFile">✕ Remove</button>
+            </div>
+            <div class="dropzone-processing" id="dropzoneProcessing" style="display:none;">
+              <div class="processing-spinner"></div>
+              <div class="processing-step" id="processingStep">Uploading audio...</div>
+              
+              <!-- Premium CSS Waveform Animation -->
+              <div class="audio-waveform-container">
+                <div class="audio-wave">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+
+              <div class="processing-bar">
+                <div class="processing-bar-fill" id="processingBarFill"></div>
+              </div>
+            </div>
+            <input type="file" id="audioFileInput" accept=".mp3,.mp4,.mpeg,.mpga,.m4a,.wav,.webm,.ogg,.flac" hidden />
+          </div>
+
+          <div class="modal-hint">
+            Audio will be transcribed using <strong>Groq Whisper</strong> and automatically analyzed for moments.
+            Speaker identification is performed by AI.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" id="audioModalCancel">Cancel</button>
+          <button class="btn-primary" id="audioModalSubmit" disabled>
+            <span id="audioSubmitText">🎙️ Transcribe & Analyze</span>
+            <span id="audioSubmitSpinner" class="loading-spinner" style="display:none;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CREDITS MODAL ===== -->
+    <div class="modal-overlay" id="creditsModal">
+      <div class="modal credits-modal-premium">
+        
+        <!-- Modal Close Button -->
+        <button class="modal-close-premium" id="creditsClose">✕</button>
+
+        <div class="credits-header-premium">
+          <div class="credits-title-container">
+            <svg class="credits-badge-svg animate-float" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="9" r="6" fill="rgba(168, 85, 247, 0.1)" />
+              <path d="M9 14.5v6.5l3-2 3 2v-6.5" fill="rgba(99, 102, 241, 0.1)" />
+            </svg>
+            <h2 class="credits-title-premium">Credits & Platform Specifications</h2>
+          </div>
+          <p class="credits-subtitle-premium">Technical details, voice architecture, and developer credentials for the Call Quality Review Tool</p>
+        </div>
+
+        <div class="credits-body-premium">
+          <!-- Main Grid (Submission and Developer Cards) -->
+          <div class="credits-main-grid">
+            
+            <!-- Card 1: Official Submission (Observe.ai) -->
+            <div class="platform-submission-card tilt-3d">
+              <div class="submission-glow"></div>
+              <div class="submission-header">
+                <div class="observe-logo-container">
+                  <img src="observe-logo.jpg" alt="Observe.ai" class="observe-logo-img">
+                </div>
+                <div class="submission-tag">OFFICIAL SUBMISSION</div>
+              </div>
+              <div class="submission-body">
+                <h3 class="submission-title">OBSERVE.AI</h3>
+                <p class="submission-challenge-tag">AI HACKATHON 2026 | ROUND 2 — AGENTIC AI CHALLENGE</p>
+                <p class="submission-desc">
+                  This intelligent platform was designed and built to address the **Call Quality Review Challenge**. 
+                  It provides advanced voice parsing, transcript normalization, automatic moment flags, and supervisor coaching recommendations.
+                </p>
+              </div>
+              <div class="submission-footer">
+                <span class="footer-chip">🏆 Challenge: Voice Intelligence</span>
+                <span class="footer-chip compliance">✓ Compliance: 100% Core Met</span>
+              </div>
+            </div>
+
+            <!-- Card 2: Developer Credentials (Shubham Chakrawarti) -->
+            <div class="developer-credentials-card tilt-3d">
+              <div class="developer-glow"></div>
+              <div class="developer-header">
+                <div class="developer-avatar-wrapper">
+                  <div class="developer-avatar">SC</div>
+                  <div class="developer-avatar-glow"></div>
+                </div>
+                <div class="developer-tag">LEAD PLATFORM ARCHITECT</div>
+              </div>
+              <div class="developer-body">
+                <h3 class="developer-name-premium">Shubham Chakrawarti</h3>
+                <p class="developer-role-premium">AI/ML ENGINEER & SOFTWARE DEVELOPER</p>
+                <div class="developer-meta-list">
+                  <span class="developer-meta-item">📍 Bengaluru, India</span>
+                  <span class="developer-meta-item">🎓 B.Tech CSE (AI) — Parul University (GPA: 7.8)</span>
+                </div>
+                
+                <div class="developer-contact-info">
+                  <a href="mailto:shubham2004.hc@gmail.com" class="contact-link" title="Email Shubham">
+                    ✉️ shubham2004.hc@gmail.com
+                  </a>
+                  <a href="tel:+919696137126" class="contact-link" title="Call Shubham">
+                    📞 +91 9696137126
+                  </a>
+                </div>
+
+                <p class="developer-desc">
+                  Specializes in building machine learning pipelines, LLM search agents, and high-performance backend microservices. Architected the Groq-Whisper voice diarization pipeline.
+                </p>
+
+                <div class="developer-skills-cloud">
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">TensorFlow</span>
+                  <span class="skill-tag">Scikit-Learn</span>
+                  <span class="skill-tag">SQL</span>
+                  <span class="skill-tag">MongoDB</span>
+                  <span class="skill-tag">Docker</span>
+                  <span class="skill-tag">CI/CD</span>
+                </div>
+              </div>
+              <div class="developer-footer">
+                <a href="https://linkedin.com/in/shubham-chakrawarti-27764836a" target="_blank" class="developer-link-btn linkedin">LinkedIn ↗</a>
+                <a href="https://github.com/shubh9696" target="_blank" class="developer-link-btn github">GitHub ↗</a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section 2: Platform Architecture & Specifications -->
+          <div class="architecture-section">
+            <h4 class="architecture-title-premium">
+              <span class="code-bracket">&lt; &gt;</span> Platform Architecture & Specifications
+            </h4>
+            <div class="architecture-grid">
+              
+              <!-- Core 1 -->
+              <div class="arch-card">
+                <div class="arch-card-icon">🎙️</div>
+                <h5 class="arch-card-title">Voice Processing Pipeline</h5>
+                <p class="arch-card-desc">Processes incoming voice streams using **Groq Whisper Large v3** to extract word segments, aligning timestamps with precise speech timings.</p>
+              </div>
+
+              <!-- Core 2 -->
+              <div class="arch-card">
+                <div class="arch-card-icon">🤖</div>
+                <h5 class="arch-card-title">Intelligent Diarization Engine</h5>
+                <p class="arch-card-desc">Passes transcription segments to **Llama 3.3** for speaker identification, separating conversation flow between the Agent and the Customer.</p>
+              </div>
+
+              <!-- Core 3 -->
+              <div class="arch-card">
+                <div class="arch-card-icon">⚡</div>
+                <h5 class="arch-card-title">Moment Detection & Coaching</h5>
+                <p class="arch-card-desc">Applies lexical rules to detect escalations, empathy indicators, long monologues, and dead air, computing summaries and coach recommendation notes.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Section 3: Tech Checklist -->
+          <div class="tech-checklist-section">
+            <h4 class="tech-checklist-title">Enterprise Engineering & Optimization Metrics</h4>
+            <div class="checklist-grid">
+              <div class="checklist-item">
+                <span class="check-icon">✓</span> Multi-LLM Fallback
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">✓</span> In-Memory Cache
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">✓</span> Whisper Large v3 STT
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">✓</span> Real-Time Analytics
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">✓</span> Glassmorphism 3D FX
+              </div>
+              <div class="checklist-item">
+                <span class="check-icon">✓</span> Interactive Waveforms
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="credits-footer-premium">
+          Designed & coded for the Fullstack Engineering Showcase • 2026
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
